@@ -10,10 +10,18 @@ main() {
       theme: ThemeData(primarySwatch: Colors.amber)));
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController _nameController = TextEditingController();
+  var myText = "Change Me";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text("First App"),
       ),
@@ -49,10 +57,39 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      body: Container(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Card(
+            child: Column(
+              children: <Widget>[
+                Image.asset("assets/background.jpeg",
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width,
+                    height: 200),
+                SizedBox(height: 20),
+                Text(myText),
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "Enter name of the image",
+                          labelText: "Name")),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        child: Icon(Icons.add),
+        onPressed: () {
+          myText = _nameController.text;
+          setState(() {});
+        },
+        child: Icon(Icons.refresh),
       ),
     );
   }
